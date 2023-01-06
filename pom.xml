@@ -19,6 +19,14 @@
             <groupId>com.shop.generic</groupId>
             <artifactId>gs-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <!-- We exclude this because we do not need any of the database starter config with jpa,
+            just the models and entities from the common library -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-jpa</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>

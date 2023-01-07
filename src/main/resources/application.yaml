@@ -1,0 +1,14 @@
+spring:
+  # Makes console log output colourful
+  output:
+    ansi:
+      enabled: ALWAYS
+
+server:
+  port: 8082
+  servlet:
+    context-path: "/purchasing-service"
+
+services:
+  product-service:
+    url: http://localhost:8081/product-service

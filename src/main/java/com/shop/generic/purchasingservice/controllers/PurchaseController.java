@@ -1,9 +1,9 @@
-package com.shop.purchasingservice.controllers;
+package com.shop.generic.purchasingservice.controllers;
 
+import com.shop.generic.common.rest.response.RestApiResponse;
+import com.shop.generic.common.rest.response.RestApiResponseFactory;
 import com.shop.generic.common.valueobjects.PurchaseProductVO;
-import com.shop.purchasingservice.rest.response.RestApiResponse;
-import com.shop.purchasingservice.rest.response.RestApiResponseFactory;
-import com.shop.purchasingservice.services.PurchasingService;
+import com.shop.generic.purchasingservice.services.PurchasingService;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +27,8 @@ public class PurchaseController {
 
     @PostMapping("/products")
     public ResponseEntity<RestApiResponse> purchaseProducts(
-            @RequestBody final List<PurchaseProductVO> purchaseProductVOS) {
+            @RequestBody final List<PurchaseProductVO> purchaseProductVOS)
+            throws Exception {
 
         final ResponseEntity response = this.purchasingService.purchaseProducts(purchaseProductVOS);
 

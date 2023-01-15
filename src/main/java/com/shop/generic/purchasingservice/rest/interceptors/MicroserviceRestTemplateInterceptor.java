@@ -1,4 +1,4 @@
-package com.shop.purchasingservice.rest.interceptors;
+package com.shop.generic.purchasingservice.rest.interceptors;
 
 import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;

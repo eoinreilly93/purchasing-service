@@ -1,6 +1,6 @@
-package com.shop.purchasingservice.configurations;
+package com.shop.generic.purchasingservice.configurations;
 
-import com.shop.purchasingservice.rest.interceptors.MicroserviceRestTemplateInterceptor;
+import com.shop.generic.purchasingservice.rest.interceptors.MicroserviceRestTemplateInterceptor;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,16 +13,16 @@ public class RestTemplateConfiguration {
     private final MicroserviceRestTemplateInterceptor microserviceRestTemplateInterceptor;
 
     public RestTemplateConfiguration(
-            MicroserviceRestTemplateInterceptor microserviceRestTemplateInterceptor) {
+            final MicroserviceRestTemplateInterceptor microserviceRestTemplateInterceptor) {
         this.microserviceRestTemplateInterceptor = microserviceRestTemplateInterceptor;
     }
 
     @Bean
     public RestTemplate restTemplate() {
-        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+        final SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
         requestFactory.setReadTimeout(120000);
         requestFactory.setConnectTimeout(60000);
-        RestTemplate restTemplate = new RestTemplate(requestFactory);
+        final RestTemplate restTemplate = new RestTemplate(requestFactory);
         restTemplate.setInterceptors(List.of(microserviceRestTemplateInterceptor));
         return restTemplate;
     }

@@ -37,7 +37,7 @@ public class RestTemplateUtil {
         } catch (final ResourceAccessException e) {
             log.error("Error in communicating with API {}", url);
             throw new ServiceUnavailableException(
-                    "Request could not be completed because the service is unavailable");
+                    "Request could not be completed because the service is unavailable", e);
         } catch (final HttpClientErrorException e) {
             log.error("Error return by service with api {}", url);
             throw getExceptionForClientError(e);
@@ -54,7 +54,7 @@ public class RestTemplateUtil {
         } catch (final ResourceAccessException e) {
             log.error("Error in communicating with API {}", url);
             throw new ServiceUnavailableException(
-                    "Request could not be completed because the service is unavailable");
+                    "Request could not be completed because the service is unavailable", e);
         } catch (final HttpClientErrorException e) {
             log.error("Error return by service with api {}", url);
             throw getExceptionForClientError(e);
@@ -72,7 +72,7 @@ public class RestTemplateUtil {
         } catch (final ResourceAccessException e) {
             log.error("Error in communicating with API {}", url);
             throw new ServiceUnavailableException(
-                    "Request could not be completed because the service is unavailable");
+                    "Request could not be completed because the service is unavailable", e);
         } catch (final HttpClientErrorException e) {
             log.error("Error return by service with api {}", url);
             throw getExceptionForClientError(e);

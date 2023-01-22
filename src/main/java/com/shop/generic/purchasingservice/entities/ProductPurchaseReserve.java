@@ -7,13 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.util.UUID;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 @Entity
 @Table(name = "product_purchase_reserve")
-@Setter
-@Getter
+@Data
 public class ProductPurchaseReserve {
 
     @Id

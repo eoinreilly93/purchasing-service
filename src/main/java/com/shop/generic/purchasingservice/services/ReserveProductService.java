@@ -26,4 +26,8 @@ public class ReserveProductService {
             return productReserve;
         }).toList());
     }
+
+    public void deleteProductReservation(final UUID id) {
+        this.productPurchaseReserveRepository.deleteByPurchaseId(id);
+    }
 }

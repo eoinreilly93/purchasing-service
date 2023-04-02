@@ -3,6 +3,7 @@ package com.shop.generic.purchasingservice.services;
 import com.shop.generic.common.rest.response.RestApiResponse;
 import com.shop.generic.common.valueobjects.PurchaseProductVO;
 import com.shop.generic.purchasingservice.exceptions.ValidationException;
+import com.shop.generic.purchasingservice.models.EnrichedPurchaseRequest;
 import com.shop.generic.purchasingservice.util.RestTemplateUtil;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +37,7 @@ public class ProductService {
             throws Exception {
         final UriComponents uri = UriComponentsBuilder.fromHttpUrl(productServiceUrl)
                 .path(UPDATE_PRODUCT_URI).build();
+        //TODO: Fix the ParameterizedTypeReference type here
         return this.restTemplateUtil.postForObject(uri.toString(), purchaseProductVOS,
                 new ParameterizedTypeReference<>() {
                 });
@@ -59,7 +61,7 @@ public class ProductService {
      *
      * @param purchaseProductVOS
      */
-    public void validatePurchaseIsValid(final List<PurchaseProductVO> purchaseProductVOS)
+    public void validatePurchaseIsValid(final EnrichedPurchaseRequest purchaseProductVOS)
             throws ValidationException {
         this.validationService.validate(purchaseProductVOS);
     }

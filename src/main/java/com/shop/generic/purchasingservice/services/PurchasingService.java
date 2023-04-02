@@ -1,6 +1,7 @@
 package com.shop.generic.purchasingservice.services;
 
 import com.shop.generic.common.valueobjects.PurchaseProductVO;
+import com.shop.generic.purchasingservice.models.EnrichedPurchaseRequest;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.http.ResponseEntity;
@@ -33,15 +34,19 @@ public class PurchasingService {
         //Reserve the products
         this.reserveProductService.reserveProducts(id, purchaseProductVOS);
 
+        final EnrichedPurchaseRequest enrichedPurchaseRequest = new EnrichedPurchaseRequest(id,
+                purchaseProductVOS);
+
         //Get the quantity of each product from the product-service and compare to the reserved
         //amount to make sure there is enough available
-        this.productService.validatePurchaseIsValid(purchaseProductVOS);
+        this.productService.validatePurchaseIsValid(enrichedPurchaseRequest);
 
         //If the above condition is met, consider the product(s) purchased and update the product stock in the product-service
         this.productService.updateProductStock(
                 purchaseProductVOS);
 
         //Delete order reservation
+        this.reserveProductService.deleteProductReservation(id);
 
         //Create Order
         return ResponseEntity.ok("Order created");

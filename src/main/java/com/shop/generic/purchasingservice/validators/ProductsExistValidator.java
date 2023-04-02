@@ -2,8 +2,10 @@ package com.shop.generic.purchasingservice.validators;
 
 import com.shop.generic.common.valueobjects.PurchaseProductVO;
 import com.shop.generic.purchasingservice.exceptions.ValidationException;
+import com.shop.generic.purchasingservice.models.EnrichedPurchaseRequest;
 import com.shop.generic.purchasingservice.util.RestTemplateUtil;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
@@ -15,8 +17,12 @@ import org.springframework.web.util.UriComponentsBuilder;
  * been combined with the {@link ProductsCanBePurchasedValidator}, but I thought it would be a
  * slightly better separation of concerns to have different validators for it
  */
+//TODO: Consider removing this validator, as if a product id is invalid, the product-service should just return that error message
+//Doing it this way reduces the number of requests we have to make by 1
+
 @Component
-public class ProductsExistValidator implements Validator<List<PurchaseProductVO>> {
+@Slf4j
+public class ProductsExistValidator implements Validator<EnrichedPurchaseRequest> {
 
     private final String PRODUCTS_URI = "/products";
 
@@ -30,8 +36,10 @@ public class ProductsExistValidator implements Validator<List<PurchaseProductVO>
     }
 
     @Override
-    public void validate(final List<PurchaseProductVO> purchaseVOs) throws ValidationException {
-
+    public void validate(final EnrichedPurchaseRequest enrichedPurchaseRequest)
+            throws ValidationException {
+        final List<PurchaseProductVO> purchaseVOs = enrichedPurchaseRequest.purchaseProductVOList();
+        log.info("Validating product ids are valid...");
         final List<Integer> productIds = purchaseVOs.stream().map(PurchaseProductVO::productId)
                 .toList();
         final UriComponents uri = UriComponentsBuilder.fromHttpUrl(productServiceUrl)
@@ -46,5 +54,6 @@ public class ProductsExistValidator implements Validator<List<PurchaseProductVO>
         } catch (final Exception e) {
             throw new ValidationException(e.getMessage());
         }
+        log.info("All product ids are valid");
     }
 }

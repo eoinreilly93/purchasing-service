@@ -1,8 +1,8 @@
 package com.shop.generic.purchasingservice.services;
 
-import com.shop.generic.common.valueobjects.PurchaseProductVO;
 import com.shop.generic.purchasingservice.configurations.ValidatorConfiguration;
 import com.shop.generic.purchasingservice.exceptions.ValidationException;
+import com.shop.generic.purchasingservice.models.EnrichedPurchaseRequest;
 import com.shop.generic.purchasingservice.validators.Validator;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -24,11 +24,11 @@ public class ValidationService {
         this.validatorList = validatorList;
     }
 
-    public boolean validate(final List<PurchaseProductVO> purchaseProductVO)
+    public boolean validate(final EnrichedPurchaseRequest enrichedPurchaseRequest)
             throws ValidationException {
         for (final Validator validator : validatorList) {
             log.info("Validating purchase against {}", validator.getClass().getSimpleName());
-            validator.validate(purchaseProductVO);
+            validator.validate(enrichedPurchaseRequest);
         }
         return true;
     }

@@ -15,11 +15,14 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
 
 server:
   port: 8082
   servlet:
     context-path: "/purchasing-service"
+  shutdown: graceful
 
 services:
   product-service:

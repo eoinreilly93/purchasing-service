@@ -1,7 +1,6 @@
 package com.shop.generic.purchasingservice.validators;
 
 import com.shop.generic.common.dtos.PurchaseProductDTO;
-import com.shop.generic.purchasingservice.exceptions.ValidationException;
 import com.shop.generic.purchasingservice.models.EnrichedPurchaseRequest;
 import com.shop.generic.purchasingservice.util.RestTemplateUtil;
 import java.util.List;
@@ -37,7 +36,7 @@ public class ProductsExistValidator implements Validator<EnrichedPurchaseRequest
 
     @Override
     public void validate(final EnrichedPurchaseRequest enrichedPurchaseRequest)
-            throws ValidationException {
+            throws Exception {
         final List<PurchaseProductDTO> purchaseVOs = enrichedPurchaseRequest.purchaseProductDTOList();
         log.info("Validating product ids are valid...");
         final List<Integer> productIds = purchaseVOs.stream().map(PurchaseProductDTO::productId)
@@ -45,15 +44,11 @@ public class ProductsExistValidator implements Validator<EnrichedPurchaseRequest
         final UriComponents uri = UriComponentsBuilder.fromHttpUrl(productServiceUrl)
                 .path(PRODUCTS_URI)
                 .queryParam("productIds", productIds).build();
-        try {
-            //We don't need to inspect the response, as if a product doesn't exist, a 400 will be returned, which will be caught and handled
-            this.restTemplateUtil.getForObject(
-                    uri.toString(),
-                    new ParameterizedTypeReference<>() {
-                    });
-        } catch (final Exception e) {
-            throw new ValidationException(e.getMessage());
-        }
+        //We don't need to inspect the response, as if a product doesn't exist, a 400 will be returned, which will be caught and handled
+        this.restTemplateUtil.getForObject(
+                uri.toString(),
+                new ParameterizedTypeReference<>() {
+                });
         log.info("All product ids are valid");
     }
 }

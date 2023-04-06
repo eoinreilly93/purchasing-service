@@ -2,7 +2,6 @@ package com.shop.generic.purchasingservice.services;
 
 import com.shop.generic.common.dtos.PurchaseProductDTO;
 import com.shop.generic.common.rest.response.RestApiResponse;
-import com.shop.generic.purchasingservice.exceptions.ValidationException;
 import com.shop.generic.purchasingservice.models.EnrichedPurchaseRequest;
 import com.shop.generic.purchasingservice.util.RestTemplateUtil;
 import java.util.List;
@@ -62,7 +61,7 @@ public class ProductService {
      * @param purchaseProductVOS
      */
     public void validatePurchaseIsValid(final EnrichedPurchaseRequest purchaseProductVOS)
-            throws ValidationException {
+            throws Exception {
         this.validationService.validate(purchaseProductVOS);
     }
 }

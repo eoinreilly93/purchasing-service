@@ -9,6 +9,7 @@ import com.shop.generic.purchasingservice.models.EnrichedPurchaseRequest;
 import com.shop.generic.purchasingservice.repositories.ProductPurchaseReserveRepository;
 import com.shop.generic.purchasingservice.util.RestTemplateUtil;
 import java.util.List;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
+@Slf4j
 public class ProductsCanBePurchasedValidator implements Validator<EnrichedPurchaseRequest> {
 
     private final String PRODUCTS_URI = "/products";
@@ -34,25 +36,23 @@ public class ProductsCanBePurchasedValidator implements Validator<EnrichedPurcha
 
     @Override
     public void validate(final EnrichedPurchaseRequest enrichedPurchaseRequest)
-            throws ValidationException {
+            throws Exception {
         final List<Integer> productIds = enrichedPurchaseRequest.purchaseProductDTOList().stream()
                 .map(PurchaseProductDTO::productId)
                 .toList();
         final UriComponents uri = UriComponentsBuilder.fromHttpUrl(productServiceUrl)
                 .path(PRODUCTS_URI)
                 .queryParam("productIds", productIds).build();
-        try {
-            //We don't need to inspect the response, as if a product doesn't exist, a 400 will be returned, which will be caught and handled
-            final RestApiResponse<List<ProductDTO>> response = this.restTemplateUtil.getForObject(
-                    uri.toString(),
-                    new ParameterizedTypeReference<>() {
-                    });
-            final List<ProductDTO> productVOSResponse = response.getResult();
 
-            canProductsBePurchased(enrichedPurchaseRequest, productVOSResponse);
-        } catch (final Exception e) {
-            throw new ValidationException(e.getMessage());
-        }
+        //We don't need to inspect the response, as if a product doesn't exist, a 400 will be returned, which will be caught and handled
+        final RestApiResponse<List<ProductDTO>> response = this.restTemplateUtil.getForObject(
+                uri.toString(),
+                new ParameterizedTypeReference<>() {
+                });
+        final List<ProductDTO> productVOSResponse = response.getResult();
+
+        canProductsBePurchased(enrichedPurchaseRequest, productVOSResponse);
+
     }
 
     private void canProductsBePurchased(final EnrichedPurchaseRequest enrichedPurchaseRequest,
@@ -80,6 +80,8 @@ public class ProductsCanBePurchasedValidator implements Validator<EnrichedPurcha
 
             if (!productCanBePurchased(quantityOfProductRequestedForCurrentUser,
                     quantityOfProductAvailableToPurchase, quantityOfProductReservedForOtherUsers)) {
+                log.error("Purchase could not be completed for reservation {}",
+                        enrichedPurchaseRequest.purchaseId());
                 throw new ValidationException(
                         "Purchase not valid as product " + requestedProductToPurchase.productId()
                                 + " does not have sufficient stock");

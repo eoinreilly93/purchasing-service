@@ -1,7 +1,6 @@
 package com.shop.generic.purchasingservice.services;
 
 import com.shop.generic.purchasingservice.configurations.ValidatorConfiguration;
-import com.shop.generic.purchasingservice.exceptions.ValidationException;
 import com.shop.generic.purchasingservice.models.EnrichedPurchaseRequest;
 import com.shop.generic.purchasingservice.validators.Validator;
 import java.util.List;
@@ -25,7 +24,7 @@ public class ValidationService {
     }
 
     public boolean validate(final EnrichedPurchaseRequest enrichedPurchaseRequest)
-            throws ValidationException {
+            throws Exception {
         for (final Validator validator : validatorList) {
             log.info("Validating purchase against {}", validator.getClass().getSimpleName());
             validator.validate(enrichedPurchaseRequest);

@@ -1,8 +1,8 @@
 package com.shop.generic.purchasingservice.validators;
 
+import com.shop.generic.common.dtos.ProductDTO;
+import com.shop.generic.common.dtos.PurchaseProductDTO;
 import com.shop.generic.common.rest.response.RestApiResponse;
-import com.shop.generic.common.valueobjects.ProductVO;
-import com.shop.generic.common.valueobjects.PurchaseProductVO;
 import com.shop.generic.purchasingservice.entities.ProductPurchaseReserve;
 import com.shop.generic.purchasingservice.exceptions.ValidationException;
 import com.shop.generic.purchasingservice.models.EnrichedPurchaseRequest;
@@ -35,19 +35,19 @@ public class ProductsCanBePurchasedValidator implements Validator<EnrichedPurcha
     @Override
     public void validate(final EnrichedPurchaseRequest enrichedPurchaseRequest)
             throws ValidationException {
-        final List<Integer> productIds = enrichedPurchaseRequest.purchaseProductVOList().stream()
-                .map(PurchaseProductVO::productId)
+        final List<Integer> productIds = enrichedPurchaseRequest.purchaseProductDTOList().stream()
+                .map(PurchaseProductDTO::productId)
                 .toList();
         final UriComponents uri = UriComponentsBuilder.fromHttpUrl(productServiceUrl)
                 .path(PRODUCTS_URI)
                 .queryParam("productIds", productIds).build();
         try {
             //We don't need to inspect the response, as if a product doesn't exist, a 400 will be returned, which will be caught and handled
-            final RestApiResponse<List<ProductVO>> response = this.restTemplateUtil.getForObject(
+            final RestApiResponse<List<ProductDTO>> response = this.restTemplateUtil.getForObject(
                     uri.toString(),
                     new ParameterizedTypeReference<>() {
                     });
-            final List<ProductVO> productVOSResponse = response.getResult();
+            final List<ProductDTO> productVOSResponse = response.getResult();
 
             canProductsBePurchased(enrichedPurchaseRequest, productVOSResponse);
         } catch (final Exception e) {
@@ -56,11 +56,11 @@ public class ProductsCanBePurchasedValidator implements Validator<EnrichedPurcha
     }
 
     private void canProductsBePurchased(final EnrichedPurchaseRequest enrichedPurchaseRequest,
-            final List<ProductVO> productVOSResponse)
+            final List<ProductDTO> productVOSResponse)
             throws ValidationException {
 
         //List all products
-        for (final PurchaseProductVO requestedProductToPurchase : enrichedPurchaseRequest.purchaseProductVOList()) {
+        for (final PurchaseProductDTO requestedProductToPurchase : enrichedPurchaseRequest.purchaseProductDTOList()) {
 
             //List all reserved products in DB excluding ones for this purchase id
             final List<ProductPurchaseReserve> reservedProductsInDB = this.productPurchaseReserveRepository.findAllByProductId(

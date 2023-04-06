@@ -1,6 +1,6 @@
 package com.shop.generic.purchasingservice.validators;
 
-import com.shop.generic.common.valueobjects.PurchaseProductVO;
+import com.shop.generic.common.dtos.PurchaseProductDTO;
 import com.shop.generic.purchasingservice.exceptions.ValidationException;
 import com.shop.generic.purchasingservice.models.EnrichedPurchaseRequest;
 import com.shop.generic.purchasingservice.util.RestTemplateUtil;
@@ -38,9 +38,9 @@ public class ProductsExistValidator implements Validator<EnrichedPurchaseRequest
     @Override
     public void validate(final EnrichedPurchaseRequest enrichedPurchaseRequest)
             throws ValidationException {
-        final List<PurchaseProductVO> purchaseVOs = enrichedPurchaseRequest.purchaseProductVOList();
+        final List<PurchaseProductDTO> purchaseVOs = enrichedPurchaseRequest.purchaseProductDTOList();
         log.info("Validating product ids are valid...");
-        final List<Integer> productIds = purchaseVOs.stream().map(PurchaseProductVO::productId)
+        final List<Integer> productIds = purchaseVOs.stream().map(PurchaseProductDTO::productId)
                 .toList();
         final UriComponents uri = UriComponentsBuilder.fromHttpUrl(productServiceUrl)
                 .path(PRODUCTS_URI)

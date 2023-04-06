@@ -1,7 +1,7 @@
 package com.shop.generic.purchasingservice.services;
 
+import com.shop.generic.common.dtos.PurchaseProductDTO;
 import com.shop.generic.common.rest.response.RestApiResponse;
-import com.shop.generic.common.valueobjects.PurchaseProductVO;
 import com.shop.generic.purchasingservice.exceptions.ValidationException;
 import com.shop.generic.purchasingservice.models.EnrichedPurchaseRequest;
 import com.shop.generic.purchasingservice.util.RestTemplateUtil;
@@ -33,12 +33,12 @@ public class ProductService {
         this.validationService = validationService;
     }
 
-    public RestApiResponse updateProductStock(final List<PurchaseProductVO> purchaseProductVOS)
+    public RestApiResponse updateProductStock(final List<PurchaseProductDTO> purchaseProductDTOS)
             throws Exception {
         final UriComponents uri = UriComponentsBuilder.fromHttpUrl(productServiceUrl)
                 .path(UPDATE_PRODUCT_URI).build();
         //TODO: Fix the ParameterizedTypeReference type here
-        return this.restTemplateUtil.postForObject(uri.toString(), purchaseProductVOS,
+        return this.restTemplateUtil.postForObject(uri.toString(), purchaseProductDTOS,
                 new ParameterizedTypeReference<>() {
                 });
     }

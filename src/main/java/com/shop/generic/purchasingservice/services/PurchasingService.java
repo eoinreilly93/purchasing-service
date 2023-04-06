@@ -53,7 +53,4 @@ public class PurchasingService {
 
         //If 200 OK, create an order
     }
-
-    //TODO: Undo the refactor to move ProductVO value objects to common. It shouldn't be needed if that service handles everything
-    //related to products. This service just cares about what response it gets back to API calls to that service
 }

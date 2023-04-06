@@ -48,16 +48,13 @@ public class PurchasingService {
             this.productService.updateProductStock(
                     purchaseProductDTOS);
 
-            //Delete order reservation
-            this.reserveProductService.deleteProductReservation(id);
-
             //Create Order
             return ResponseEntity.ok("Order created");
 
             //If 200 OK, create an order
 
         }
-        // We need to delete the product reservation whether the purchase is successful or not
+        // We need to delete the product reservations whether the purchase is successful or not
         finally {
             log.info("Removing reservation from database with id {}", id);
             this.reserveProductService.deleteProductReservation(id);

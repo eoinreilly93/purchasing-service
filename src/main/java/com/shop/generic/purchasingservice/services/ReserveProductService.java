@@ -5,11 +5,13 @@ import com.shop.generic.purchasingservice.entities.ProductPurchaseReserve;
 import com.shop.generic.purchasingservice.repositories.ProductPurchaseReserveRepository;
 import java.util.List;
 import java.util.UUID;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
+@Slf4j
 public class ReserveProductService {
 
     private final ProductPurchaseReserveRepository productPurchaseReserveRepository;
@@ -30,6 +32,7 @@ public class ReserveProductService {
     }
 
     public void deleteProductReservation(final UUID id) {
+        log.info("Deleting product reservation with it {}", id);
         this.productPurchaseReserveRepository.deleteByPurchaseId(id);
     }
 }

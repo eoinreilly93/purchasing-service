@@ -1,11 +1,12 @@
 package com.shop.generic.purchasingservice.services;
 
+import com.shop.generic.common.dtos.OrderResponseDTO;
 import com.shop.generic.common.dtos.PurchaseProductDTO;
+import com.shop.generic.common.rest.response.RestApiResponse;
 import com.shop.generic.purchasingservice.models.EnrichedPurchaseRequest;
 import java.util.List;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,11 +15,13 @@ public class PurchasingService {
 
     private final ProductService productService;
     private final ReserveProductService reserveProductService;
+    private final OrderService orderService;
 
     public PurchasingService(final ProductService productService,
-            final ReserveProductService reserveProductService) {
+            final ReserveProductService reserveProductService, final OrderService orderService) {
         this.productService = productService;
         this.reserveProductService = reserveProductService;
+        this.orderService = orderService;
     }
 
     //Perform validations
@@ -27,7 +30,8 @@ public class PurchasingService {
     // - Update stock of item in database and make request to order-service to create the order
     // - Look into how this would be done if this service could not access the products table
 
-    public ResponseEntity purchaseProducts(final List<PurchaseProductDTO> purchaseProductDTOS)
+    public RestApiResponse<OrderResponseDTO> purchaseProducts(
+            final List<PurchaseProductDTO> purchaseProductDTOS)
             throws Exception {
 
         //Possibly need to generate unique purchase id here to store with product reservations
@@ -48,10 +52,8 @@ public class PurchasingService {
             this.productService.updateProductStock(
                     purchaseProductDTOS);
 
-            //Create Order
-            return ResponseEntity.ok("Order created");
-
-            //If 200 OK, create an order
+            return this.orderService.createOrder(
+                    purchaseProductDTOS);
 
         }
         // We need to delete the product reservations whether the purchase is successful or not

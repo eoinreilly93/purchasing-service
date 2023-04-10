@@ -1,11 +1,11 @@
 package com.shop.generic.purchasingservice.controllers;
 
+import com.shop.generic.common.dtos.OrderResponseDTO;
 import com.shop.generic.common.dtos.PurchaseProductDTO;
 import com.shop.generic.common.rest.response.RestApiResponse;
 import com.shop.generic.common.rest.response.RestApiResponseFactory;
 import com.shop.generic.purchasingservice.services.PurchasingService;
 import java.util.List;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,12 +30,10 @@ public class PurchaseController {
             @RequestBody final List<PurchaseProductDTO> purchaseProductDTOS)
             throws Exception {
 
-        final ResponseEntity response = this.purchasingService.purchaseProducts(
+        final RestApiResponse<OrderResponseDTO> response = this.purchasingService.purchaseProducts(
                 purchaseProductDTOS);
 
-        //TODO: Replace this message with and OrderCreatedVO
-        return new ResponseEntity<>(
-                restApiResponseFactory.createSuccessResponse(response.getBody()),
-                HttpStatus.CREATED);
+        return ResponseEntity.ok(
+                this.restApiResponseFactory.createSuccessResponse(response.getResult()));
     }
 }

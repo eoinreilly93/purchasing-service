@@ -8,7 +8,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -16,43 +15,28 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class ProductService {
 
     private static final String UPDATE_PRODUCT_URI = "/products/update";
-    private static final String CHECK_PRODUCT_AVAILABLE_URI = "/products/{productId}/available";
 
     @Value("${services.product-service.url}")
     private String productServiceUrl;
 
-    private final RestTemplate restTemplate;
     private final RestTemplateUtil restTemplateUtil;
     private final ValidationService validationService;
 
-    public ProductService(final RestTemplate restTemplate,
-            final RestTemplateUtil restTemplateUtil, final ValidationService validationService) {
-        this.restTemplate = restTemplate;
+    public ProductService(final RestTemplateUtil restTemplateUtil,
+            final ValidationService validationService) {
         this.restTemplateUtil = restTemplateUtil;
         this.validationService = validationService;
     }
 
+    //TODO: Parameter the response
     public RestApiResponse updateProductStock(final List<PurchaseProductDTO> purchaseProductDTOS)
             throws Exception {
         final UriComponents uri = UriComponentsBuilder.fromHttpUrl(productServiceUrl)
                 .path(UPDATE_PRODUCT_URI).build();
-        //TODO: Fix the ParameterizedTypeReference type here
         return this.restTemplateUtil.postForObject(uri.toString(), purchaseProductDTOS,
                 new ParameterizedTypeReference<>() {
                 });
     }
-
-    public String checkIfProductIsAvailable(final int productId) throws Exception {
-        final UriComponents uri = UriComponentsBuilder.fromHttpUrl(productServiceUrl)
-                .path(CHECK_PRODUCT_AVAILABLE_URI)
-                .pathSegment(String.valueOf(productId)).build();
-        final RestApiResponse<String> response = restTemplateUtil.getForObject(uri.toString(),
-                new ParameterizedTypeReference<RestApiResponse<String>>() {
-                });
-        return response.getResult();
-
-    }
-
 
     /**
      * Validate purchase is valid. Includes validating the quantity of items requested for purchase

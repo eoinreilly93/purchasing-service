@@ -27,3 +27,5 @@ server:
 services:
   product-service:
     url: http://localhost:8081/product-service
+  order-service:
+    url: http://localhost:8083/order-service

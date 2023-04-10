@@ -32,7 +32,7 @@ public class ReserveProductService {
     }
 
     public void deleteProductReservation(final UUID id) {
-        log.info("Deleting product reservation with it {}", id);
+        log.info("Deleting product reservation with id {}", id);
         this.productPurchaseReserveRepository.deleteByPurchaseId(id);
     }
 }

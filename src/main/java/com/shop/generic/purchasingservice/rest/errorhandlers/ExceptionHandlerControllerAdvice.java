@@ -24,7 +24,7 @@ public class ExceptionHandlerControllerAdvice {
 
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<RestApiResponse> handleValidationException(final ValidationException e) {
-        log.info("Responding with bad request due to validation exception", e);
+        log.error("Responding with bad request due to validation exception", e);
         return ResponseEntity.badRequest()
                 .body(restApiResponseFactory.createErrorResponse(e.getMessage()));
     }

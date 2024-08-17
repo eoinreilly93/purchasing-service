@@ -5,6 +5,7 @@ import com.shop.generic.purchasingservice.exceptions.ServiceException;
 import com.shop.generic.purchasingservice.exceptions.ServiceUnavailableException;
 import com.shop.generic.purchasingservice.exceptions.ValidationException;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -80,7 +81,7 @@ public class RestTemplateUtil {
     }
 
     private Exception getExceptionForClientError(final HttpClientErrorException e)
-            throws ValidationException {
+            throws ValidationException, JSONException {
         final JSONObject jsonObject = new JSONObject(e.getResponseBodyAsString());
         final String errorMessage = (String) jsonObject.get("error");
         final HttpStatusCode statusCode = e.getStatusCode();

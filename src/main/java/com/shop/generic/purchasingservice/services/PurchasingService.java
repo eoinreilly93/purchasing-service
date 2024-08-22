@@ -34,6 +34,10 @@ public class PurchasingService {
             final List<PurchaseProductDTO> purchaseProductDTOS)
             throws Exception {
 
+        if (purchaseProductDTOS.isEmpty()) {
+            throw new RuntimeException("Cannot create a purchase order wth no products");
+        }
+
         //Possibly need to generate unique purchase id here to store with product reservations
         final UUID id = UUID.randomUUID();
 

@@ -17,7 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Slf4j
 public class OrderService {
 
-    private static final String CREATE_ORDER_URI = "/orders/create";
+    private static final String CREATE_ORDER_URI = "/orders";
 
     @Value("${services.order-service.url}")
     private String orderServiceUrl;

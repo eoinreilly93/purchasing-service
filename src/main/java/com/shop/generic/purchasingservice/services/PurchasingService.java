@@ -52,8 +52,7 @@ public class PurchasingService {
             //amount to make sure there is enough available
             this.productService.validatePurchaseIsValid(enrichedPurchaseRequest);
 
-            //TODO: We should only invoke this if the order-service returns a 200 for the creation response
-            //TODO: Alternatively, this could be left as is an any errors creating orders should raise alerts for a support team to handle to manually create the order
+            //TODO: We should only invoke this if the order-service returns a 200 for the creation response really. Shouldn't update stock until order is created
             //If the above condition is met, consider the product(s) purchased and update the product stock in the product-service
             this.productService.updateProductStock(
                     purchaseProductDTOS);

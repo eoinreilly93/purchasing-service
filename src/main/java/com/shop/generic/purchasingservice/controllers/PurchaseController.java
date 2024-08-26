@@ -7,6 +7,7 @@ import com.shop.generic.common.rest.response.RestApiResponseFactory;
 import com.shop.generic.purchasingservice.services.PurchasingService;
 import java.util.List;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ public class PurchaseController {
     }
 
     @PostMapping("/products")
+    @Transactional
     public ResponseEntity<RestApiResponse> purchaseProducts(
             @RequestBody final List<PurchaseProductDTO> purchaseProductDTOS)
             throws Exception {

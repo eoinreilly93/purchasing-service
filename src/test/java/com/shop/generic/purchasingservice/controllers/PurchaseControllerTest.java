@@ -19,7 +19,10 @@ import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.Customization;
 import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.skyscreamer.jsonassert.comparator.CustomComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -122,15 +125,11 @@ class PurchaseControllerTest {
                 ]
                 """;
 
-        //We leave out the timestamp as that will cause the test to fail due to RestApiResponseFactory using LocalDateTime.now()
-        //When that is replaced with a clock, we can mock it here instead
-        final String expectedApiResponse = """
-                {
-                    "message": null,
-                    "error": "A validation error message",
-                    "result": null
-                }
-                """;
+        //We use an object here as an example to show in JSONAssert how we can exclude the timestamp field from the assertion, since including the timestamp would result in the test failing due to the LocalDateTime.now() method
+        final RestApiResponse expectedApiResponse = new RestApiResponse<>(null,
+                "A validation error message",
+                null,
+                LocalDateTime.now());
 
         //When
         final MockHttpServletResponse actualResponse = this.mockMvc.perform(
@@ -142,7 +141,10 @@ class PurchaseControllerTest {
         //Then
         assertThat(actualResponse.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
         //We use an unstrict JSONAssert here so that we can compare the json without the test failing due to the missing timestamp field in the expectedApiResponse
-        JSONAssert.assertEquals(expectedApiResponse, actualResponse.getContentAsString(), false);
+        JSONAssert.assertEquals(jacksonTester.write(expectedApiResponse).getJson(),
+                actualResponse.getContentAsString(), new CustomComparator(
+                        JSONCompareMode.LENIENT,
+                        new Customization("timestamp", (o1, o2) -> true)
+                ));
     }
-
 }

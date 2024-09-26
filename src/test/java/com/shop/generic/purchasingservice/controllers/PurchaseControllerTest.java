@@ -76,7 +76,7 @@ class PurchaseControllerTest {
         given(purchasingService.purchaseProducts(productsToPurchase)).willReturn(
                 mockApiResponse);
 
-        //We leave out the timestamp as that will cause the test to fail due to RestApiResponseFactory using LocalDateTime.now()
+        //We leave out the timestamp as it's not required as part of the assertion of this test, due to use non-strict JSONAssert
         //When that is replaced with a clock, we can mock it here instead
         final String expectedApiResponse = """
                 {

@@ -19,10 +19,6 @@ spring:
       enabled: ALWAYS
   lifecycle:
     timeout-per-shutdown-phase: 20s
-  # TODO: Fix app from crashing without this. It is because it is bringing in the configuration from the common project.
-  # The fix should be the setup in the common project, separate out the kafka config from other config
-  kafka:
-    bootstrap-servers: localhost:9092
 
 server:
   port: 8082

@@ -1,11 +1,13 @@
 spring:
+  application:
+    name: Purchasing-Service
   datasource:
     url: jdbc:h2:mem:purchasedb
     username: sa
     password: password
     driverClassName: org.h2.Driver
   jpa:
-    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.H2Dialect
     # Disable hibernate auto schema creation
     hibernate:
       ddl-auto: none
@@ -17,6 +19,10 @@ spring:
       enabled: ALWAYS
   lifecycle:
     timeout-per-shutdown-phase: 20s
+  # TODO: Fix app from crashing without this. It is because it is bringing in the configuration from the common project.
+  # The fix should be the setup in the common project, separate out the kafka config from other config
+  kafka:
+    bootstrap-servers: localhost:9092
 
 server:
   port: 8082

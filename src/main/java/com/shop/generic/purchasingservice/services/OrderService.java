@@ -32,7 +32,10 @@ public class OrderService {
             final List<PurchaseProductDTO> purchaseProductDTOS)
             throws Exception {
 
-        final OrderCreationDTO orderCreationDTO = new OrderCreationDTO(purchaseProductDTOS);
+        //TODO: Replace this eventually by fetching the address from the current user session
+        final String city = "London";
+
+        final OrderCreationDTO orderCreationDTO = new OrderCreationDTO(purchaseProductDTOS, city);
         final UriComponents uri = UriComponentsBuilder.fromHttpUrl(orderServiceUrl)
                 .path(CREATE_ORDER_URI).build();
         return this.restTemplateUtil.postForObject(uri.toString(), orderCreationDTO,

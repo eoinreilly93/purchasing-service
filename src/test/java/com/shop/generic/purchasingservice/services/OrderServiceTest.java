@@ -54,7 +54,8 @@ class OrderServiceTest {
         final PurchaseProductDTO product2 = new PurchaseProductDTO(2, 1, new BigDecimal("15.50"));
         final List<PurchaseProductDTO> purchaseProductDTOS = List.of(product1, product2);
 
-        final OrderCreationDTO expectedOrderCreationDTO = new OrderCreationDTO(purchaseProductDTOS);
+        final OrderCreationDTO expectedOrderCreationDTO = new OrderCreationDTO(purchaseProductDTOS,
+                "London");
         final OrderResponseDTO orderResponseDTO = new OrderResponseDTO(UUID.randomUUID(),
                 OrderStatus.CREATED);
         final RestApiResponse<OrderResponseDTO> expectedResponse = RestApiResponse.<OrderResponseDTO>builder()

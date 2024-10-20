@@ -10,9 +10,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.shop.generic.common.dtos.PurchaseProductDTO;
+import com.shop.generic.common.rest.request.RestTemplateUtil;
 import com.shop.generic.common.rest.response.RestApiResponse;
 import com.shop.generic.purchasingservice.models.EnrichedPurchaseRequest;
-import com.shop.generic.purchasingservice.util.RestTemplateUtil;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;

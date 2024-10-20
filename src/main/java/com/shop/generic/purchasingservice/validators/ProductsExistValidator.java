@@ -1,8 +1,8 @@
 package com.shop.generic.purchasingservice.validators;
 
 import com.shop.generic.common.dtos.PurchaseProductDTO;
+import com.shop.generic.common.rest.request.RestTemplateUtil;
 import com.shop.generic.purchasingservice.models.EnrichedPurchaseRequest;
-import com.shop.generic.purchasingservice.util.RestTemplateUtil;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

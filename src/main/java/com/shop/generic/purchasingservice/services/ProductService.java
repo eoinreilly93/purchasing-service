@@ -1,9 +1,9 @@
 package com.shop.generic.purchasingservice.services;
 
 import com.shop.generic.common.dtos.PurchaseProductDTO;
+import com.shop.generic.common.rest.request.RestTemplateUtil;
 import com.shop.generic.common.rest.response.RestApiResponse;
 import com.shop.generic.purchasingservice.models.EnrichedPurchaseRequest;
-import com.shop.generic.purchasingservice.util.RestTemplateUtil;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;

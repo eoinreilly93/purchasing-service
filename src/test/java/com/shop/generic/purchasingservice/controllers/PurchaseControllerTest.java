@@ -9,9 +9,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shop.generic.common.dtos.OrderResponseDTO;
 import com.shop.generic.common.dtos.PurchaseProductDTO;
 import com.shop.generic.common.enums.OrderStatus;
+import com.shop.generic.common.rest.errorhandlers.ExceptionHandlerControllerAdvice;
+import com.shop.generic.common.rest.exceptions.ValidationException;
 import com.shop.generic.common.rest.response.RestApiResponse;
 import com.shop.generic.common.rest.response.RestApiResponseFactory;
-import com.shop.generic.purchasingservice.exceptions.ValidationException;
 import com.shop.generic.purchasingservice.services.PurchasingService;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -36,7 +37,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 
 @WebMvcTest(PurchaseController.class)
-@Import(RestApiResponseFactory.class)
+@Import({RestApiResponseFactory.class, ExceptionHandlerControllerAdvice.class})
 @AutoConfigureJsonTesters
 @DisplayName("HTTP requests to the purchases controller")
 class PurchaseControllerTest {

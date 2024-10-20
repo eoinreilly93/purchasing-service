@@ -11,10 +11,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.shop.generic.common.rest.exceptions.ServiceException;
+import com.shop.generic.common.rest.exceptions.ServiceUnavailableException;
+import com.shop.generic.common.rest.exceptions.ValidationException;
+import com.shop.generic.common.rest.request.RestTemplateUtil;
 import com.shop.generic.common.rest.response.RestApiResponse;
-import com.shop.generic.purchasingservice.exceptions.ServiceException;
-import com.shop.generic.purchasingservice.exceptions.ServiceUnavailableException;
-import com.shop.generic.purchasingservice.exceptions.ValidationException;
 import org.junit.jupiter.api.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;

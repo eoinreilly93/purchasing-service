@@ -2,12 +2,12 @@ package com.shop.generic.purchasingservice.validators;
 
 import com.shop.generic.common.dtos.ProductDTO;
 import com.shop.generic.common.dtos.PurchaseProductDTO;
+import com.shop.generic.common.rest.exceptions.ValidationException;
+import com.shop.generic.common.rest.request.RestTemplateUtil;
 import com.shop.generic.common.rest.response.RestApiResponse;
 import com.shop.generic.purchasingservice.entities.ProductPurchaseReserve;
-import com.shop.generic.purchasingservice.exceptions.ValidationException;
 import com.shop.generic.purchasingservice.models.EnrichedPurchaseRequest;
 import com.shop.generic.purchasingservice.repositories.ProductPurchaseReserveRepository;
-import com.shop.generic.purchasingservice.util.RestTemplateUtil;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

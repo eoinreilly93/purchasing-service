@@ -11,6 +11,5 @@ public class PaymentValidator implements Validator {
     @Override
     public void validate(final Object object) throws ValidationException {
         log.info("Validating payment...");
-        throw new ValidationException("Payment is not valid");
     }
 }

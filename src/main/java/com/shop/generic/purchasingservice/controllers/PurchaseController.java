@@ -1,6 +1,6 @@
 package com.shop.generic.purchasingservice.controllers;
 
-import com.shop.generic.common.dtos.OrderResponseDTO;
+import com.shop.generic.common.dtos.OrderStatusDTO;
 import com.shop.generic.common.dtos.PurchaseProductDTO;
 import com.shop.generic.common.rest.response.RestApiResponse;
 import com.shop.generic.common.rest.response.RestApiResponseFactory;
@@ -32,7 +32,7 @@ public class PurchaseController {
             @RequestBody final List<PurchaseProductDTO> purchaseProductDTOS)
             throws Exception {
 
-        final RestApiResponse<OrderResponseDTO> response = this.purchasingService.purchaseProducts(
+        final RestApiResponse<OrderStatusDTO> response = this.purchasingService.purchaseProducts(
                 purchaseProductDTOS);
 
         return ResponseEntity.ok(

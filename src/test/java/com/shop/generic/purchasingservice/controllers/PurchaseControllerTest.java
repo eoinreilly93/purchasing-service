@@ -6,7 +6,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shop.generic.common.dtos.OrderResponseDTO;
+import com.shop.generic.common.dtos.OrderStatusDTO;
 import com.shop.generic.common.dtos.PurchaseProductDTO;
 import com.shop.generic.common.enums.OrderStatus;
 import com.shop.generic.common.rest.errorhandlers.ExceptionHandlerControllerAdvice;
@@ -55,7 +55,7 @@ class PurchaseControllerTest {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private JacksonTester<RestApiResponse<OrderResponseDTO>> jacksonTester;
+    private JacksonTester<RestApiResponse<OrderStatusDTO>> jacksonTester;
 
     @Test
     @DisplayName("Should return a 200 OK for a successful purchase request")
@@ -68,10 +68,10 @@ class PurchaseControllerTest {
         final List<PurchaseProductDTO> productsToPurchase = List.of(purchaseDTO, purchaseDTO2);
 
         final UUID id = UUID.randomUUID();
-        final OrderResponseDTO orderResponseDTO = new OrderResponseDTO(id, OrderStatus.CREATED);
+        final OrderStatusDTO orderStatusDTO = new OrderStatusDTO(id, OrderStatus.CREATED);
 
-        final RestApiResponse<OrderResponseDTO> mockApiResponse = new RestApiResponse<>(null, null,
-                orderResponseDTO,
+        final RestApiResponse<OrderStatusDTO> mockApiResponse = new RestApiResponse<>(null, null,
+                orderStatusDTO,
                 LocalDateTime.now());
 
         given(purchasingService.purchaseProducts(productsToPurchase)).willReturn(

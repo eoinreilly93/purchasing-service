@@ -14,7 +14,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
-import com.shop.generic.common.dtos.OrderResponseDTO;
+import com.shop.generic.common.dtos.OrderStatusDTO;
 import com.shop.generic.common.dtos.PurchaseProductDTO;
 import com.shop.generic.common.enums.OrderStatus;
 import com.shop.generic.common.rest.response.RestApiResponse;
@@ -62,11 +62,11 @@ class PurchasingServiceTest {
     @Test
     void testPurchaseProducts_Success() throws Exception {
         final UUID mockPurchaseId = UUID.randomUUID();
-        final OrderResponseDTO orderResponseDTO = new OrderResponseDTO(mockPurchaseId,
+        final OrderStatusDTO orderStatusDTO = new OrderStatusDTO(mockPurchaseId,
                 OrderStatus.CREATED);
         final LocalDateTime now = LocalDateTime.now();
-        final RestApiResponse<OrderResponseDTO> mockResponse = RestApiResponse.<OrderResponseDTO>builder()
-                .result(orderResponseDTO)
+        final RestApiResponse<OrderStatusDTO> mockResponse = RestApiResponse.<OrderStatusDTO>builder()
+                .result(orderStatusDTO)
                 .message("Order created successfully")
                 .timestamp(now)
                 .build();
@@ -84,7 +84,7 @@ class PurchasingServiceTest {
         when(productService.updateProductStock(anyList())).thenReturn(mockProductServiceResponse);
         when(orderService.createOrder(anyList())).thenReturn(mockResponse);
 
-        final RestApiResponse<OrderResponseDTO> response = purchasingService.purchaseProducts(
+        final RestApiResponse<OrderStatusDTO> response = purchasingService.purchaseProducts(
                 purchaseProductDTOS);
 
         // Verify interactions and assertions

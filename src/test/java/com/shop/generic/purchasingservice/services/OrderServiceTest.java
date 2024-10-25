@@ -8,7 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.shop.generic.common.dtos.OrderCreationDTO;
-import com.shop.generic.common.dtos.OrderResponseDTO;
+import com.shop.generic.common.dtos.OrderStatusDTO;
 import com.shop.generic.common.dtos.PurchaseProductDTO;
 import com.shop.generic.common.enums.OrderStatus;
 import com.shop.generic.common.rest.request.RestTemplateUtil;
@@ -56,11 +56,11 @@ class OrderServiceTest {
 
         final OrderCreationDTO expectedOrderCreationDTO = new OrderCreationDTO(purchaseProductDTOS,
                 "London");
-        final OrderResponseDTO orderResponseDTO = new OrderResponseDTO(UUID.randomUUID(),
+        final OrderStatusDTO orderStatusDTO = new OrderStatusDTO(UUID.randomUUID(),
                 OrderStatus.CREATED);
-        final RestApiResponse<OrderResponseDTO> expectedResponse = RestApiResponse.<OrderResponseDTO>builder()
+        final RestApiResponse<OrderStatusDTO> expectedResponse = RestApiResponse.<OrderStatusDTO>builder()
                 .message("Order created successfully")
-                .result(orderResponseDTO)
+                .result(orderStatusDTO)
                 .timestamp(LocalDateTime.now())
                 .build();
 
@@ -68,7 +68,7 @@ class OrderServiceTest {
                 any(ParameterizedTypeReference.class))).thenReturn(expectedResponse);
 
         // Act
-        final RestApiResponse<OrderResponseDTO> actualResponse = orderService.createOrder(
+        final RestApiResponse<OrderStatusDTO> actualResponse = orderService.createOrder(
                 purchaseProductDTOS);
 
         // Assert

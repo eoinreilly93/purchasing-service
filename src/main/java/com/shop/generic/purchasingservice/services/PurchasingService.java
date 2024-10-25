@@ -1,6 +1,6 @@
 package com.shop.generic.purchasingservice.services;
 
-import com.shop.generic.common.dtos.OrderResponseDTO;
+import com.shop.generic.common.dtos.OrderStatusDTO;
 import com.shop.generic.common.dtos.PurchaseProductDTO;
 import com.shop.generic.common.rest.response.RestApiResponse;
 import com.shop.generic.purchasingservice.models.EnrichedPurchaseRequest;
@@ -30,7 +30,7 @@ public class PurchasingService {
     // - Update stock of item in database and make request to order-service to create the order
     // - TODO: Look into how this would be done if this service could not access the products table
 
-    public RestApiResponse<OrderResponseDTO> purchaseProducts(
+    public RestApiResponse<OrderStatusDTO> purchaseProducts(
             final List<PurchaseProductDTO> purchaseProductDTOS)
             throws Exception {
 

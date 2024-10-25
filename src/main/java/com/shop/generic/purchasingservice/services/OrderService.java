@@ -1,7 +1,7 @@
 package com.shop.generic.purchasingservice.services;
 
 import com.shop.generic.common.dtos.OrderCreationDTO;
-import com.shop.generic.common.dtos.OrderResponseDTO;
+import com.shop.generic.common.dtos.OrderStatusDTO;
 import com.shop.generic.common.dtos.PurchaseProductDTO;
 import com.shop.generic.common.rest.request.RestTemplateUtil;
 import com.shop.generic.common.rest.response.RestApiResponse;
@@ -28,7 +28,7 @@ public class OrderService {
         this.restTemplateUtil = restTemplateUtil;
     }
 
-    public RestApiResponse<OrderResponseDTO> createOrder(
+    public RestApiResponse<OrderStatusDTO> createOrder(
             final List<PurchaseProductDTO> purchaseProductDTOS)
             throws Exception {
 

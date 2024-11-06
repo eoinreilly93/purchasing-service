@@ -25,6 +25,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.skyscreamer.jsonassert.comparator.CustomComparator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.json.JacksonTester;
@@ -36,7 +37,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 
 
-@WebMvcTest(PurchaseController.class)
+@WebMvcTest(value = PurchaseController.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
 @Import({RestApiResponseFactory.class, ExceptionHandlerControllerAdvice.class})
 @AutoConfigureJsonTesters
 @DisplayName("HTTP requests to the purchases controller")

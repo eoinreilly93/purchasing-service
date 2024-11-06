@@ -34,3 +34,11 @@ services:
     url: http://localhost:8081/product-service
   order-service:
     url: http://localhost:8083/order-service
+
+gsshop-common:
+  auth:
+    enabled: true
+    jwt-token-secret: c63714bee7677d179d980aeceffb1a2ac63ebb25933cc16ad58d90f043b9da9f1c22b6d70e7ec8183884108eb6660be5d1cfba7da55b56cfa6e8ba201f97370a
+    jwt-token-salt: abcd1234
+    security-ignore-urls: /purchase/**,/orders/**
+    jwt-token-validity: 3600000

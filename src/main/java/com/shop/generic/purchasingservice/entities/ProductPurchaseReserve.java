@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.util.UUID;
 import lombok.Data;
@@ -15,7 +16,8 @@ import lombok.Data;
 public class ProductPurchaseReserve {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reservation_id_gen")
+    @SequenceGenerator(name = "reservation_id_gen", sequenceName = "reservation_id_seq", allocationSize = 1)
     private long id;
 
     @Column(name = "purchase_id", nullable = false)

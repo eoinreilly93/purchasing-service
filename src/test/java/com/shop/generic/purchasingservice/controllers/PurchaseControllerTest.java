@@ -6,6 +6,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shop.generic.common.clock.ApplicationClock;
 import com.shop.generic.common.dtos.OrderStatusDTO;
 import com.shop.generic.common.dtos.PurchaseProductDTO;
 import com.shop.generic.common.enums.OrderStatus;
@@ -38,7 +39,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 
 @WebMvcTest(value = PurchaseController.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
-@Import({RestApiResponseFactory.class, ExceptionHandlerControllerAdvice.class})
+@Import({RestApiResponseFactory.class, ExceptionHandlerControllerAdvice.class,
+        ApplicationClock.class})
 @AutoConfigureJsonTesters
 @DisplayName("HTTP requests to the purchases controller")
 class PurchaseControllerTest {

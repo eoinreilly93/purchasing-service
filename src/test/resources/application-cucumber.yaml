@@ -1,0 +1,5 @@
+services:
+  product-service:
+    url: http://localhost:${wiremock.server.port}/product-service
+  order-service:
+    url: http://localhost:${wiremock.server.port}/order-service

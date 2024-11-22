@@ -3,7 +3,7 @@ Feature: Purchase service flow
   Background:
     Given initial setup is complete
     And the service is up and running
-    And now is "2024-11-06T08:13:12.345"
+    And now is "2024-11-19T19:43:58.065Z"
 
   @Positive
   Scenario: Successfully create a purchase
@@ -22,7 +22,7 @@ Feature: Purchase service flow
             "stockCount": 100
           }
         ],
-        "timestamp": "2024-11-19T19:43:58.065521"
+        "timestamp": "2024-11-19T19:43:58.065"
       }
     """
 
@@ -32,7 +32,7 @@ Feature: Purchase service flow
         "message": null,
         "error": null,
         "result": "Product stock successfully updated",
-        "timestamp": "2024-11-19T19:48:45.205064"
+        "timestamp": "2024-11-19T19:43:58.065"
       }
     """
 
@@ -45,7 +45,7 @@ Feature: Purchase service flow
           "orderId": "a3e16dc7-0c39-4e30-9d53-529bacf2f3e1",
           "status": "CREATED"
         },
-        "timestamp": "2024-11-19T19:48:45.205064"
+        "timestamp": "2024-11-19T19:43:58.065"
        }
     """
 
@@ -69,7 +69,7 @@ Feature: Purchase service flow
           "orderId": "a3e16dc7-0c39-4e30-9d53-529bacf2f3e1",
           "status": "CREATED"
         },
-        "timestamp": "2024-11-19T19:48:45.205064"
+        "timestamp": "2024-11-19T19:43:58.065"
        }
     """
 

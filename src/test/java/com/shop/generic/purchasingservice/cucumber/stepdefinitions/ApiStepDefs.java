@@ -6,8 +6,10 @@ import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
+import com.shop.generic.common.clock.GsClock;
 import com.shop.generic.purchasingservice.cucumber.configurations.CucumberSpringConfiguration;
 import com.shop.generic.purchasingservice.cucumber.enums.Service;
 import com.shop.generic.purchasingservice.repositories.ProductPurchaseReserveRepository;
@@ -15,12 +17,16 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
 import lombok.extern.slf4j.Slf4j;
 import org.skyscreamer.jsonassert.Customization;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.skyscreamer.jsonassert.comparator.CustomComparator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
@@ -41,6 +47,9 @@ public class ApiStepDefs extends CucumberSpringConfiguration {
     @Autowired
     private ProductPurchaseReserveRepository productPurchaseReserveRepository;
 
+    @MockBean
+    private GsClock clock;
+
     private MvcResult mvcResult;
     private MockHttpServletResponse response;
 
@@ -60,8 +69,9 @@ public class ApiStepDefs extends CucumberSpringConfiguration {
     }
 
     @And("now is {string}")
-    public void nowIs(final String time) {
-        //TODO: Implement once clock is setup
+    public void nowIs(final String dateTime) {
+        when(this.clock.getClock()).thenReturn(
+                Clock.fixed(Instant.parse(dateTime), ZoneId.systemDefault()));
     }
 
     @When("a POST request is sent to {string} with data")
@@ -83,7 +93,6 @@ public class ApiStepDefs extends CucumberSpringConfiguration {
         assertEquals(expectedStatus, response.getStatus());
         JSONAssert.assertEquals(expectedBody, response.getContentAsString(), new CustomComparator(
                 JSONCompareMode.LENIENT,
-                new Customization("timestamp", (o1, o2) -> true),
                 new Customization("result.orderId", (o1, o2) -> true)
         ));
     }

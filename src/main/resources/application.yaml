@@ -23,6 +23,26 @@ spring:
     virtual:
       enabled: true
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+      group:
+        liveness:
+          include:
+            - livenessState
+            - db
+            - ping
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
+
 server:
   port: 8082
   servlet:
@@ -42,3 +62,12 @@ gsshop-common:
     jwt-token-salt: abcd1234
     security-ignore-urls: /purchase/**,/orders/**
     jwt-token-validity: 3600000
+
+# Logs to file and allows SBA to pick it up as well
+logging:
+  file:
+    name: logs/purchasing-service.log
+
+#logging:
+#  level:
+#    org.springframework.web.filter.CommonsRequestLoggingFilter: debug
